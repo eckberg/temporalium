@@ -1,0 +1,20 @@
+{
+  "name": "temporalium",
+  "version": "0.1.0",
+  "description": "Convenient helper functions for the Temporal API.",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "vitest",
+    "build": "tsup"
+  },
+  "author": "Karl Eckberg <karl@eckberg.se>",
+  "license": "MIT",
+  "peerDependencies": {
+    "@js-temporal/polyfill": "^0.4.4"
+  },
+  "devDependencies": {
+    "tsup": "^8.3.5",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.4"
+  }
+}
