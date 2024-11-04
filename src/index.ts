@@ -1,1 +1,1 @@
-export { isMonday } from "./functions/comparison/isMonday";
+export { isMonday } from "./comparison/isMonday";
