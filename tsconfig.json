@@ -1,13 +1,4 @@
 {
-  "compilerOptions": {
-    "target": "ESNext",
-    "lib": ["esnext"],
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "strict": true,
-    "declaration": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true
-  }
+  "extends": "@tsconfig/strictest/tsconfig.json",
+  "exclude": ["dist/**", "eslint.config.js"]
 }

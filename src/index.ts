@@ -1,1 +1,1 @@
-export { isMonday } from "./comparison/isMonday";
+export * from "./comparisons";
