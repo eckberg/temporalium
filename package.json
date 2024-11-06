@@ -1,16 +1,42 @@
 {
   "name": "temporalium",
   "version": "0.1.0",
-  "description": "Convenient helper functions for the Temporal API.",
+  "description": "A TypeScript utility library for Temporal API date manipulations.",
   "main": "src/index.ts",
   "type": "module",
   "scripts": {
     "test": "vitest",
     "build": "tsup",
-    "lint": "eslint ."
+    "lint": "eslint src --ext .ts",
+    "format": "prettier --write .",
+    "prepublishOnly": "npm run test && npm run lint && npm run build"
+  },
+  "engines": {
+    "node": ">=16"
   },
   "author": "Karl Eckberg <karl@eckberg.se>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eckberg/temporalium.git"
+  },
+  "bugs": {
+    "url": "https://github.com/eckberg/temporalium/issues"
+  },
+  "homepage": "https://github.com/eckberg/temporalium#readme",
   "license": "MIT",
+  "keywords": [
+    "Temporal API",
+    "date utilities",
+    "typescript",
+    "date manipulation",
+    "javascript",
+    "calendar"
+  ],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "peerDependencies": {
     "@js-temporal/polyfill": "^0.4.4"
   },

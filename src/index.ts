@@ -1,1 +1,1 @@
-export * from "./comparisons";
+export * from "./comparisons.js";
