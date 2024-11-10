@@ -1,14 +1,68 @@
 import { describe, it, expect } from "vitest";
-import { Temporal } from "@js-temporal/polyfill";
 import {
 	isFriday,
 	isMonday,
 	isSaturday,
 	isSunday,
 	isThursday,
+	isToday,
+	isTomorrow,
 	isTuesday,
 	isWednesday,
+	isYesterday,
 } from "../src/index.js";
+
+describe("isYesterday", () => {
+	it("returns true for evening Stockholm compared with Singapore time", () => {
+		const stockholmTime = Temporal.Now.zonedDateTimeISO(
+			"Europe/Stockholm",
+		).with({ hour: 21 });
+
+		expect(isYesterday(stockholmTime, "Asia/Singapore")).toBe(true);
+	});
+});
+
+describe("isToday", () => {
+	it("should accept an ISO date string", () => {
+		expect(() => isToday("2024-11-09")).not.toThrowError();
+	});
+
+	it("should accept an ISO date and time string", () => {
+		expect(() => isToday("2006-08-24T15:43:27+01:00[Europe/Brussels]")).not.toThrowError();
+	});
+
+	it("should not accept a malformed ISO date string", () => {
+		expect(() => isToday("2024/11-09")).toThrowError();
+	});
+
+	it("should not accept a date without year", () => {
+		const plainMonth = Temporal.Now.plainDateISO().toPlainMonthDay();
+		expect(() => isToday(plainMonth)).toThrowError();
+	});
+
+	it("returns true for same day with unspecified timezone", () => {
+		const nowDate = new Date().toISOString().substring(0, 19);
+		expect(isToday(nowDate)).toBe(true);
+	});
+
+	it("returns false for evening Stockholm compared with Singapore time", () => {
+		const stockholmTime = Temporal.Now.zonedDateTimeISO(
+			"Europe/Stockholm",
+		).with({ hour: 21 });
+
+		expect(isToday(stockholmTime, "Asia/Singapore")).toBe(false);
+	});
+});
+
+describe("isTomorrow", () => {
+	it("returns true for morning Singapore time compared with evening Stockholm time", () => {
+		const singaporeTime = Temporal.Now.zonedDateTimeISO("Asia/Singapore").with({
+			hour: 3,
+		});
+
+		expect(isTomorrow(singaporeTime, "Europe/Stockholm")).toBe(true);
+	});
+});
 
 describe("isMonday", () => {
 	it("returns true for a Monday date", () => {

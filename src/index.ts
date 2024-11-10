@@ -1,1 +1,3 @@
-export * from "./comparisons.js";
+import 'temporal-polyfill/global'
+
+export * from "./compare.js";

@@ -38,7 +38,7 @@
     "LICENSE"
   ],
   "peerDependencies": {
-    "@js-temporal/polyfill": "^0.4.4"
+    "temporal-polyfill": "^0.2.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.14.0",
