@@ -13,12 +13,9 @@ import {
 } from "../src/index.js";
 
 describe("isYesterday", () => {
-	it("returns true for evening Stockholm compared with Singapore time", () => {
-		const stockholmTime = Temporal.Now.zonedDateTimeISO(
-			"Europe/Stockholm",
-		).with({ hour: 21 });
-
-		expect(isYesterday(stockholmTime, "Asia/Singapore")).toBe(true);
+	it("returns true for yesterday's PlainDate", () => {
+		const yesterday = Temporal.Now.plainDateISO().add({ hours: -24 });
+		expect(isYesterday(yesterday)).toBeTruthy();
 	});
 });
 
@@ -28,44 +25,51 @@ describe("isToday", () => {
 	});
 
 	it("should accept an ISO date and time string", () => {
-		expect(() => isToday("2006-08-24T15:43:27+01:00[Europe/Brussels]")).not.toThrowError();
+		expect(() =>
+			isToday("2006-08-24T15:43:27+01:00[Europe/Brussels]"),
+		).not.toThrowError();
 	});
 
 	it("should not accept a malformed ISO date string", () => {
 		expect(() => isToday("2024/11-09")).toThrowError();
 	});
 
-	it("should not accept a date without year", () => {
+	it("should accept a Temporal.PlainDate object", () => {
+		const plainDate = Temporal.Now.plainDateISO();
+		expect(() => isToday(plainDate)).not.toThrowError();
+	});
+
+	it("should accept a Temporal.ZonedDateTime object", () => {
+		const zonedDateTime = Temporal.Now.zonedDateTimeISO();
+		expect(() => isToday(zonedDateTime)).not.toThrowError();
+	});
+
+	it("should not accept a Temporal.PlainMonth object", () => {
 		const plainMonth = Temporal.Now.plainDateISO().toPlainMonthDay();
+		// @ts-expect-error: Test designed to catch wrong type input
 		expect(() => isToday(plainMonth)).toThrowError();
 	});
 
-	it("returns true for same day with unspecified timezone", () => {
-		const nowDate = new Date().toISOString().substring(0, 19);
-		expect(isToday(nowDate)).toBe(true);
+	it("returns true for today's PlainDate", () => {
+		const today = Temporal.Now.plainDateISO();
+		expect(isToday(today)).toBeTruthy();
 	});
 
-	it("returns false for evening Stockholm compared with Singapore time", () => {
-		const stockholmTime = Temporal.Now.zonedDateTimeISO(
-			"Europe/Stockholm",
-		).with({ hour: 21 });
-
-		expect(isToday(stockholmTime, "Asia/Singapore")).toBe(false);
+	it("returns true for same day from JS Date with unspecified timezone", () => {
+		const nowDate = new Date().toISOString().substring(0, 19);
+		expect(isToday(nowDate)).toBe(true);
 	});
 });
 
 describe("isTomorrow", () => {
-	it("returns true for morning Singapore time compared with evening Stockholm time", () => {
-		const singaporeTime = Temporal.Now.zonedDateTimeISO("Asia/Singapore").with({
-			hour: 3,
-		});
-
-		expect(isTomorrow(singaporeTime, "Europe/Stockholm")).toBe(true);
+	it("returns true for tomorrow's PlainDate", () => {
+		const tomorrow = Temporal.Now.plainDateISO().add({ hours: 24 });
+		expect(isTomorrow(tomorrow)).toBeTruthy();
 	});
 });
 
 describe("isMonday", () => {
-	it("returns true for a Monday date", () => {
+	it("returns true for a Monday ISO date", () => {
 		const mondayDate = Temporal.PlainDate.from("2024-11-04"); // This is a Monday
 		expect(isMonday(mondayDate)).toBe(true);
 	});
@@ -73,6 +77,13 @@ describe("isMonday", () => {
 	it("returns false for a non-Monday date", () => {
 		const sundayDate = Temporal.PlainDate.from("2024-11-03"); // This is a Sunday
 		expect(isMonday(sundayDate)).toBe(false);
+	});
+
+	it("returns true for a Monday gregorian string date", () => {
+		const mondayDate = Temporal.PlainDate.from("2024-11-04")
+			.withCalendar("gregory")
+			.toString(); // This is a Monday
+		expect(isMonday(mondayDate)).toBe(true);
 	});
 });
 

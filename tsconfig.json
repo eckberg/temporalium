@@ -1,6 +1,6 @@
 {
   "extends": "@tsconfig/strictest/tsconfig.json",
-  "exclude": ["dist/**", "eslint.config.js"],
+  "exclude": ["dist/**", "coverage/**", "eslint.config.js"],
   "compilerOptions": {
     "module": "NodeNext",
     "moduleResolution": "NodeNext"
