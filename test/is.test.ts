@@ -6,7 +6,6 @@ import {
 	isSunday,
 	isThursday,
 	isToday,
-	isTomorrow,
 	isTuesday,
 	isWednesday,
 	isYesterday,
@@ -67,6 +66,7 @@ describe("isTomorrow", () => {
 		expect(isTomorrow(tomorrow)).toBeTruthy();
 	});
 });
+
 
 describe("isMonday", () => {
 	it("returns true for a Monday ISO date", () => {

@@ -1,4 +1,4 @@
-import { today, tomorrow, yesterday } from "./navigate.js";
+import { today, tomorrow, yesterday } from "./now.js";
 import { CalendarDate } from "./types.js";
 
 export function isYesterday(
