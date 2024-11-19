@@ -23,18 +23,15 @@ export type CalendarDate =
 				calendar?: Temporal.CalendarLike;
 			});
 
-export type TemporalsWithCompareConstructors = typeof Temporal.Instant
-| typeof Temporal.ZonedDateTime
-| typeof Temporal.PlainDate
-| typeof Temporal.PlainTime
-| typeof Temporal.PlainDateTime
-| typeof Temporal.PlainYearMonth;
+export type TemporalsComparable =
+	| Temporal.Instant
+	| Temporal.ZonedDateTime
+	| Temporal.PlainDate
+	| Temporal.PlainTime
+	| Temporal.PlainDateTime
+	| Temporal.PlainYearMonth;
 
-export type TemporalsWithCompareInstances = InstanceType<TemporalsWithCompareConstructors>;
-
-export type CompareFunction<TemporalsWithCompareInstances> = (a: TemporalsWithCompareInstances, b: TemporalsWithCompareInstances) => Temporal.ComparisonResult;
-
-// Create a mapping that enforces the relationship between constructors and their compare functions
-export type TemporalCompareMap = {
-  [K in TemporalsWithCompareConstructors as InstanceType<K>['constructor']]: CompareFunction<InstanceType<K>>;
-};
+export type TemporalsCompareFunction = (
+	one: TemporalsComparable | string,
+	b: TemporalsComparable | string,
+) => Temporal.ComparisonResult;
